@@ -2,6 +2,15 @@ var restify = require('restify');
 var builder = require('botbuilder');
 
 //=========================================================
+// App Insights Setup - 
+// assumes instrumentation keycmd set in the environment variable APPINSIGHTS_INSTRUMENTATIONKEY 
+//=========================================================
+
+var appInsights = require("applicationinsights");
+appInsights.setup
+var client = appInsights.getClient();
+
+//=========================================================
 // Bot Setup
 //=========================================================
 
@@ -24,8 +33,18 @@ server.post('/api/messages', connector.listen());
 //=========================================================
 
 bot.dialog('/', function (session) {
+    var client = appInsights.getClient();
+
+    client.trackEvent("Bot Root called", {customProperty: "custom property value"});
+    // client.trackException(new Error("handled exceptions can be logged with this method"));
+    // client.trackMetric("custom metric", 3);
+    // client.trackTrace("trace message");
     session.send("Hello World");
 });
+
+//=========================================================
+// Server Response
+//=========================================================
 
 server.get('/', function (req, res) { 
     res.send('GTM Bot Running'); 
