@@ -7,7 +7,7 @@ var builder = require('botbuilder');
 //=========================================================
 
 var appInsights = require("applicationinsights");
-appInsights.setup
+appInsights.setup;
 var client = appInsights.getClient();
 
 //=========================================================
